@@ -1,0 +1,50 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #1c1f3a, #2c2f5c);
+  color: white;
+}
+
+/* HEADER */
+header {
+  text-align: center;
+  padding: 20px;
+}
+
+/* BOTONES */
+.controls {
+  text-align: center;
+  margin: 15px;
+}
+
+button {
+  padding: 12px 18px;
+  margin: 8px;
+  border: none;
+  border-radius: 8px;
+  background: #5b5f97;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover {
+  background: #787dbd;
+}
+
+/* DIAGRAMA */
+#myDiagramDiv {
+  width: 90%;
+  height: 600px;
+  margin: auto;
+  background: #2b2e4a;
+  border-radius: 12px;
+  border: 2px solid #555;
+}
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 10px;
+  font-size: 12px;
+}
