@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Mapa Mental Interactivo</title>
+
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/gojs/release/go.js"></script>
+</head>
+
+<body>
+
+<header>
+  <h1>Mapa Mental: De la Percepción del Usuario al Sistema Real</h1>
+  <p>Haz clic en el botón para alternar entre el modelo mental y el modelo conceptual</p>
+</header>
+
+<section class="controls">
+  <button onclick="cargarMental()">Ver Modelo Mental del Usuario</button>
+  <button onclick="cargarConceptual()">Ver Modelo Conceptual del Sistema</button>
+</section>
+
+<section id="myDiagramDiv"></section>
+
+<footer>
+  <p>Práctica GoJS - App Delivery</p>
+</footer>
+
+<script>
+  const $ = go.GraphObject.make;
+
+  const myDiagram = $(go.Diagram, "myDiagramDiv", {
+    initialAutoScale: go.Diagram.Uniform,
+    layout: $(go.TreeLayout, {
+      angle: 90,
+      layerSpacing: 50
+    }),
+    "undoManager.isEnabled": true
+  });
+
+  // NODOS
+  myDiagram.nodeTemplate =
+    $(go.Node, "Auto",
+      $(go.Shape, "RoundedRectangle",
+        { strokeWidth: 0 },
+        new go.Binding("fill", "color")
+      ),
+      $(go.TextBlock,
+        {
+          margin: 10,
+          stroke: "white",
+          font: "bold 13px sans-serif",
+          textAlign: "center"
+        },
+        new go.Binding("text", "key")
+      )
+    );
+
+  // ENLACES
+  myDiagram.linkTemplate =
+    $(go.Link,
+      { routing: go.Link.Orthogonal, corner: 8 },
+      $(go.Shape, { strokeWidth: 2, stroke: "#aaa" }),
+      $(go.Shape, { toArrow: "Standard", fill: "#aaa" })
+    );
+
+  // 🧠 MODELO MENTAL
+  const modeloMental = [
+    { key: "App Delivery", color: "#3498DB" },
+
+    { key: "Abrir app", parent: "App Delivery", color: "#2ECC71" },
+    { key: "Buscar restaurante", parent: "Abrir app", color: "#2ECC71" },
+    { key: "Elegir comida", parent: "Buscar restaurante", color: "#2ECC71" },
+    { key: "Agregar al carrito", parent: "Elegir comida", color: "#2ECC71" },
+    { key: "Pagar", parent: "Agregar al carrito", color: "#2ECC71" },
+    { key: "Esperar pedido", parent: "Pagar", color: "#2ECC71" },
+    { key: "Recibir comida", parent: "Esperar pedido", color: "#2ECC71" }
+  ];
+
+  // ⚙️ MODELO CONCEPTUAL
+  const modeloConceptual = [
+    { key: "Sistema Delivery", color: "#E74C3C" },
+
+    { key: "Autenticación", parent: "Sistema Delivery", color: "#E74C3C" },
+    { key: "Geolocalización", parent: "Autenticación", color: "#E74C3C" },
+    { key: "Consulta BD restaurantes", parent: "Geolocalización", color: "#E74C3C" },
+    { key: "Gestión carrito", parent: "Consulta BD restaurantes", color: "#E74C3C" },
+    { key: "Procesar pago", parent: "Gestión carrito", color: "#E74C3C" },
+    { key: "Enviar pedido", parent: "Procesar pago", color: "#E74C3C" },
+    { key: "Asignar repartidor", parent: "Enviar pedido", color: "#E74C3C" },
+    { key: "Seguimiento en tiempo real", parent: "Asignar repartidor", color: "#E74C3C" },
+    { key: "Notificaciones", parent: "Seguimiento en tiempo real", color: "#E74C3C" },
+    { key: "Entrega confirmada", parent: "Notificaciones", color: "#E74C3C" }
+  ];
+
+  function cargarMental() {
+    myDiagram.model = new go.TreeModel(modeloMental);
+  }
+
+  function cargarConceptual() {
+    myDiagram.model = new go.TreeModel(modeloConceptual);
+  }
+
+  // inicial
+  cargarMental();
+
+</script>
+
+</body>
+</html>
